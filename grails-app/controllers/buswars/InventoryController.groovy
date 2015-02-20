@@ -34,6 +34,10 @@ class InventoryController {
 	def history() {		
 		render Purchased.list() as JSON
 	}
+	
+	def products() {
+		render Product.list() as JSON
+	}
 		
 		
 	

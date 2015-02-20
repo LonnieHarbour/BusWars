@@ -19,6 +19,7 @@ class UrlMappings {
 		
 		"/purchases"(controller:"inventory", action:"history", method:"GET")
 		
+		"/products"(controller:"inventory", action:"products", method:"GET")
 		
 	}
 }

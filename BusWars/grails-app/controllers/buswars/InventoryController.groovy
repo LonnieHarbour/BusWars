@@ -30,6 +30,10 @@ class InventoryController {
 		    render status: 404
 		}
 	}		
+	
+	def history() {		
+		render Purchased.list() as JSON
+	}
 		
 		
 	

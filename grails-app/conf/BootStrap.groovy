@@ -18,7 +18,7 @@ class BootStrap {
 			output['name'] = p.name
 			output['qty-purchased'] = p.qtyPurchased
 			output['price'] = p.price
-			output['total'] = p.price * p.qtyPurchased
+			output['total'] = p.total
 			output
 		}
 		

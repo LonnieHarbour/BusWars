@@ -1,8 +1,5 @@
 package buswars
 
-import grails.transaction.Transactional
-
-@Transactional
 class ProductService {
 
     Purchased purchase(Product product, BuyRequest buyRequest) {
@@ -11,10 +8,12 @@ class ProductService {
 			product.qtyOnHand = product.qtyOnHand - buyRequest.qty
 			product.save()
 						
-			return new Purchased(sku: product.sku,
+			new Purchased(sku: product.sku,
 				name: product.name,
 				qtyPurchased: buyRequest.qty,
-				price: product.price).save()				
+				price: product.price,
+				total: (product.price*buyRequest.qty)?.round(2)
+				).save()				
 		}
 
     }

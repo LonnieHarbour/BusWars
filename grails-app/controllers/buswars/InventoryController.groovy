@@ -37,8 +37,7 @@ class InventoryController {
 	
 	def products() {
 		render Product.list() as JSON
-	}
-		
+	}		
 		
 	
 }

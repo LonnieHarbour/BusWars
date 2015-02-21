@@ -6,7 +6,7 @@ class Purchased {
 	String name
 	int qtyPurchased
 	float price
-	int transId
+	float total
 	
     static constraints = {
     }

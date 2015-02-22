@@ -20,7 +20,7 @@ class InventoryController {
 	}
 	
 	@Transactional
-	def buy(BuyRequest buyRequest) {
+	def buy(BidRequest buyRequest) {
 		
 		Product product = Product.where { sku == buyRequest.sku }.find()
 		
@@ -32,7 +32,7 @@ class InventoryController {
 	}		
 	
 	def history() {		
-		render Purchased.list() as JSON
+		render Bid.list() as JSON
 	}
 	
 	def products() {

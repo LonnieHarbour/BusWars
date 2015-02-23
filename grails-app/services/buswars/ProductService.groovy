@@ -2,19 +2,31 @@ package buswars
 
 class ProductService {
 
-    Purchased purchase(Product product, BuyRequest buyRequest) {
-		if (product?.qtyOnHand >= buyRequest?.qty) {
-			
-			product.qtyOnHand = product.qtyOnHand - buyRequest.qty
+    Bid purchase(Product product, BidRequest bidRequest) {		
+		
+		int qty = fullfill(product, bidRequest)
+		
+		if (qty) {
+			product.qtyOnHand -= qty
 			product.save()
-						
-			new Purchased(sku: product.sku,
-				name: product.name,
-				qtyPurchased: buyRequest.qty,
-				price: product.price,
-				total: (product.price*buyRequest.qty)?.round(2)
-				).save()				
 		}
-
+		
+		new Bid(sku: product.sku, 
+			name: product.name,
+			qtyRequested: bidRequest.qty,
+			qtyFullfilled: qty,
+			price: bidRequest.price,
+			total: (qty*bidRequest.price)?.round(2),
+			accepted: qty>0).save()
+		
     }
+	
+	private int fullfill(Product product, BidRequest bidRequest) {
+		if (bidRequest?.allOrNone) {
+			product.qtyOnHand >= bidRequest.qty ? bidRequest.qty : 0
+		} else {
+		    product.qtyOnHand - bidRequest.qty <= 0 ? product.qtyOnHand : bidRequest.qty
+		}
+	}
+	
 }

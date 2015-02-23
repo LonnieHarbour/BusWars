@@ -1,6 +1,6 @@
 import grails.converters.*
 import buswars.Product
-import buswars.Purchased
+import buswars.Bid
 
 class BootStrap {
 
@@ -11,14 +11,15 @@ class BootStrap {
 		new Product(name: "Dodge Challenger SRT Hellcat", price: 62090.0, qtyOnHand: 1, sku: "D99959699-HC" ).save()
 		new Product(name: "Silly Putty", price: 2.99, qtyOnHand: 2093399, sku: "4107" ).save()
 				
-		JSON.registerObjectMarshaller(Purchased) { Purchased p ->
+		JSON.registerObjectMarshaller(Bid) { Bid p ->
 			def output = [:]
             output['trans-id'] = p.id
 			output['sku'] = p.sku
 			output['name'] = p.name
-			output['qty-purchased'] = p.qtyPurchased
+			output['qty-purchased'] = p.qtyFullfilled
 			output['price'] = p.price
 			output['total'] = p.total
+			output['accepted'] = p.accepted
 			output
 		}
 		
@@ -30,6 +31,7 @@ class BootStrap {
 			output['qty'] = p.qtyOnHand
 			output
 		}
+		
     }
 	
     def destroy = {

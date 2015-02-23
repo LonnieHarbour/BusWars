@@ -20,7 +20,9 @@ class InventoryController {
 	}
 	
 	@Transactional
-	def buy(BidRequest bidRequest) {
+	def buy() {
+		
+		BidRequest bidRequest = new BidRequest(request.JSON)
 		
 		Product product = Product.where { sku == bidRequest.sku }.find()
 		

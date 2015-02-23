@@ -8,11 +8,15 @@ import grails.validation.Validateable
 @Validateable
 class BidRequest {
 
+	BidRequest(def src) {
+		sku = src.sku
+		allOrNone = src.'all-or-none'
+		price = src.price
+		qty = src.qty
+	}
+	
 	String sku
-	
-	@BindUsing({obj, source -> allOrNone = source['all-or-none']})
 	boolean allOrNone
-	
 	float price
 	int qty
 	

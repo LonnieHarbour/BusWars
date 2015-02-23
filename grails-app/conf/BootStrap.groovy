@@ -31,6 +31,7 @@ class BootStrap {
 			output['qty'] = p.qtyOnHand
 			output
 		}
+		
     }
 	
     def destroy = {

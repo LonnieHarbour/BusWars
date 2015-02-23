@@ -20,12 +20,12 @@ class InventoryController {
 	}
 	
 	@Transactional
-	def buy(BidRequest buyRequest) {
+	def buy(BidRequest bidRequest) {
 		
-		Product product = Product.where { sku == buyRequest.sku }.find()
+		Product product = Product.where { sku == bidRequest.sku }.find()
 		
 		if (product) {
-			render productService.purchase(product, buyRequest) as JSON 
+			render productService.purchase(product, bidRequest) as JSON 
 		} else {
 		    render status: 404
 		}

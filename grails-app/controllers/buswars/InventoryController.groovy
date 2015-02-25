@@ -22,9 +22,9 @@ class InventoryController {
 	@Transactional
 	def buy() {
 		
-		BidRequest bidRequest = new BidRequest(request.JSON)
+		TransactionRequest trans = new TransactionRequest(request.JSON)
 		
-		Product product = Product.where { sku == bidRequest.sku }.find()
+		Product product = Product.where { sku == trans.sku }.find()
 		
 		if (product) {
 			render productService.purchase(product, bidRequest) as JSON 
@@ -34,12 +34,23 @@ class InventoryController {
 	}		
 	
 	def history() {		
-		render Bid.list() as JSON
+		render Transaction.list() as JSON
 	}
 	
-	def products() {
-		render Product.list() as JSON
+	/*
+	 * Inventory from API spec
+	 */
+	def products() {				
+		render Product.where { inventory?.qtyOnHand > 0 }.list() as JSON
 	}		
+	
+	/*
+	 * Catalog from API spec.
+	 */
+	def catalog() {				
+		render Product.list()?.collect { p ->  new Catalog(p) } as JSON			
+	}
+	
 		
 	
 }

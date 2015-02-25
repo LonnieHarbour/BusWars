@@ -2,7 +2,7 @@ package buswars
 
 class ProductService {
 
-    Bid purchase(Product product, BidRequest bidRequest) {		
+    Transaction purchase(Product product, TransactionRequest bidRequest) {		
 		
 		int qty = fullfill(product, bidRequest)
 		
@@ -11,7 +11,7 @@ class ProductService {
 			product.save()
 		}
 		
-		new Bid(sku: product.sku, 
+		new Transaction(sku: product.sku, 
 			name: product.name,
 			qtyRequested: bidRequest.qty,
 			qtyFullfilled: qty,
@@ -21,7 +21,7 @@ class ProductService {
 		
     }
 	
-	private int fullfill(Product product, BidRequest bidRequest) {
+	private int fullfill(Product product, TransactionRequest bidRequest) {
 		if (bidRequest?.allOrNone) {
 			product.qtyOnHand >= bidRequest.qty ? bidRequest.qty : 0
 		} else {

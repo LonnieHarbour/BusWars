@@ -1,0 +1,5 @@
+package buswars
+
+class TransactionLine {
+
+}

@@ -1,17 +1,17 @@
 import grails.converters.*
+import buswars.Catalog;
+import buswars.DatabaseInit;
 import buswars.Product
-import buswars.Bid
+import buswars.Transaction
 
 class BootStrap {
 
 	
     def init = { servletContext ->
-		new Product(name: "Light Saber", price: 114.11, qtyOnHand: 1500, sku: "10-1050" ).save()		
-		new Product(name: "Thor's Hammer", price: 12.5, qtyOnHand: 1500, sku: "99AA 450" ).save()
-		new Product(name: "Dodge Challenger SRT Hellcat", price: 62090.0, qtyOnHand: 1, sku: "D99959699-HC" ).save()
-		new Product(name: "Silly Putty", price: 2.99, qtyOnHand: 2093399, sku: "4107" ).save()
+		
+		new DatabaseInit().init()
 				
-		JSON.registerObjectMarshaller(Bid) { Bid p ->
+		JSON.registerObjectMarshaller(Transaction) { Transaction p ->
 			def output = [:]
             output['trans-id'] = p.id
 			output['sku'] = p.sku
@@ -28,7 +28,15 @@ class BootStrap {
 			output['sku'] = p.sku
 			output['name'] = p.name
 			output['price'] = p.price
-			output['qty'] = p.qtyOnHand
+			output['qty'] = p.inventory ? p.inventory.qtyOnHand : 0
+			output
+		}
+		
+		JSON.registerObjectMarshaller(Catalog) { Catalog c ->
+			def output = [:]
+			output['sku'] = c.product?.sku
+			output['name'] = c.product.name
+			output['price'] = c.product.price
 			output
 		}
 		

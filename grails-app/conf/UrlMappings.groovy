@@ -18,7 +18,7 @@ class UrlMappings {
 		"/inventory"(controller:"inventory", action:"products", method:"GET")
 		
 		//show a product regardless of if it has inventory or not
-		"/inventory/$id"(controller:"inventory", action:"show", method:"GET")
+		"/inventory/$sku"(controller:"inventory", action:"show", method:"GET")
 		
 		//buy
 		"/accounts/$accountNumber/transactions"(controller:"inventory", action:"buy", method:"POST")

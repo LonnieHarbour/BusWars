@@ -4,7 +4,8 @@ class ProductService {
 
 	Account account(int accountId) {		
 		Account account = Account.where { id == accountId }.find()
-		if (!account) throw NotFound		
+		if (!account) throw new NotFound()
+		account		
 	}
 	
 	
@@ -44,9 +45,10 @@ class ProductService {
 		}
 	}
 	
-	private Product productById(int id) {		
-		Product product = Product.where { sku == id }.find()		 
-		if (!product) throw NotFound		
+	private Product productBySku(def skuId) {		
+		Product product = Product.where { sku == skuId }.find()		 
+		if (!product) throw new NotFound()		
+		product
 	}
 	
 }

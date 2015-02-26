@@ -12,9 +12,9 @@ class InventoryController {
 		render status: 404
 	}
 	
-    def show(String id) { 
+    def show(String sku) { 
 		
-		render productService.productById(id) as JSON
+		render productService.productBySku(sku) as JSON
 	}
 	
 	@Transactional
@@ -41,7 +41,7 @@ class InventoryController {
 	 * Catalog from API spec.
 	 */
 	def catalog() {				
-		render Product.list()?.collect { new Catalog(it) } as JSON			
+		render Product.list()?.collect { new Catalog(product:it) } as JSON			
 	}
 	
 }

@@ -11,15 +11,22 @@ class UrlMappings {
         "500"(view:'/error')
 		"404"(view:'/404')
 		
-		"/inventory/$id"(controller:"inventory", action:"show", method:"GET")
+		//show it all minus inventories
+		"/catalog"(controller:"inventory", action:"catalog", method:"GET")
 		
-		"/inventory/$id"(controller:"inventory", action:"buy", method:"POST")
+		//show products with existing inventories
+		"/inventory"(controller:"inventory", action:"products", method:"GET")
 		
-		"/inventory"(controller:"inventory", action:"buy", method:"POST")
+		//show a product regardless of if it has inventory or not
+		"/inventory/$sku"(controller:"inventory", action:"show", method:"GET")
+		
+		//buy
+		"/accounts/$accountNumber/transactions"(controller:"inventory", action:"buy", method:"POST")
 		
 		"/purchases"(controller:"inventory", action:"history", method:"GET")
 		
-		"/products"(controller:"inventory", action:"products", method:"GET")
+		
+		
 		
 	}
 }

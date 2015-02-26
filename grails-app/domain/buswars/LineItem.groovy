@@ -1,14 +1,13 @@
 package buswars
 
-class Bid {
-	
-	String sku
-	String name
+class LineItem {
+
 	int qtyRequested
-	int qtyFullfilled
-	float price
+	int qtyFullfilled	
 	float total
 	boolean accepted
+	//Transaction transaction
+	Product product
 	
     static constraints = {
     }

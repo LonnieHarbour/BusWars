@@ -6,19 +6,26 @@ import org.springframework.context.annotation.PropertySource
 import grails.validation.Validateable
 
 @Validateable
-class BidRequest {
-
-	BidRequest(def src) {
+class TransactionRequest {
+	
+	TransactionRequest(def src) {
 		sku = src.sku
 		allOrNone = src.'all-or-none'
 		price = src.price
 		qty = src.qty
+		src.lineItems?.each { line ->
+			lines.add new TransactionLine(
+				sku: line.sku,
+	            qty: line.qty, 
+	            name: line.name,
+	            price: line.price,
+	            subtotal: subtotal)
+		}
 	}
 	
-	String sku
 	boolean allOrNone
 	float price
-	int qty
+	def lines = []
 	
 	static constraints = {
 		sku blank: false

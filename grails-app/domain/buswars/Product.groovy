@@ -6,8 +6,6 @@ class Product {
 	String name	
 	float price
 	
-	static hasMany = [transactions:Transaction]
-	
 	static hasOne = [inventory:Inventory]
 	
     static constraints = {

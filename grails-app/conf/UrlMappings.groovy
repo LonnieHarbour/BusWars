@@ -21,8 +21,7 @@ class UrlMappings {
 		"/inventory/$id"(controller:"inventory", action:"show", method:"GET")
 		
 		//buy
-		"/transaction/$accountNumber"(controller:"inventory", action:"buy", method:"POST")		
-		"/inventory"(controller:"inventory", action:"buy", method:"POST")
+		"/accounts/$accountNumber/transactions"(controller:"inventory", action:"buy", method:"POST")
 		
 		"/purchases"(controller:"inventory", action:"history", method:"GET")
 		

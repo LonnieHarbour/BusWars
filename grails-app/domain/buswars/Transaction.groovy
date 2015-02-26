@@ -3,9 +3,9 @@ package buswars
 class Transaction {
 	
 	float total
-	Product product
+	Account account
 	
-	static hasMany = [lines:Line]
+	static hasMany = [lineItems:LineItem]
 	
     static constraints = {
     }

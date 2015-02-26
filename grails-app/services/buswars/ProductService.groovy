@@ -2,24 +2,39 @@ package buswars
 
 class ProductService {
 
-    Transaction purchase(Product product, TransactionRequest bidRequest) {		
+	Account account(int accountId) {		
+		Account account = Account.where { id == accountId }.find()
+		if (!account) throw NotFound		
+	}
+	
+	
+    Transaction purchase(Account account, TransactionRequest order) {	
 		
-		int qty = fullfill(product, bidRequest)
+		Transaction transaction = new Transaction(account:account).save()	
 		
-		if (qty) {
-			product.qtyOnHand -= qty
-			product.save()
+		def products = Product.findBySkuInList(order?.lines.collect { sku } )		
+				
+		order?.lines.each { line ->
+			
+			Product product = products.find { line.sku = sku }
+			
+			int qtyFullfilled = fullfill(product, line )
+			
+			if (qty) {
+				product.qtyOnHand -= qtyFullfilled
+				product.save()
+			}
+			
+			transaction.lineItems.add(new LineItem(
+				accepted: qty>0,
+				product:product,
+				qtyFullfilled: qtyFullfilled,
+				qtyRequest: line.qtyRequested
+				))
 		}
 		
-		new Transaction(sku: product.sku, 
-			name: product.name,
-			qtyRequested: bidRequest.qty,
-			qtyFullfilled: qty,
-			price: bidRequest.price,
-			total: (qty*bidRequest.price)?.round(2),
-			accepted: qty>0).save()
-		
-    }
+		transaction.save()
+    }	
 	
 	private int fullfill(Product product, TransactionRequest bidRequest) {
 		if (bidRequest?.allOrNone) {
@@ -27,6 +42,11 @@ class ProductService {
 		} else {
 		    product.qtyOnHand - bidRequest.qty <= 0 ? product.qtyOnHand : bidRequest.qty
 		}
+	}
+	
+	private Product productById(int id) {		
+		Product product = Product.where { sku == id }.find()		 
+		if (!product) throw NotFound		
 	}
 	
 }

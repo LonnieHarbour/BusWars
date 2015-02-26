@@ -8,29 +8,22 @@ class InventoryController {
 	
 	ProductService productService
 	
+	def handleNotFound(NotFound nf) {
+		render status: 404
+	}
+	
     def show(String id) { 
 		
-		Product product = Product.where { sku == id }.find()
-		
-		if (product) {
-			render product as JSON
-		} else {
-		    render status: 404
-		}
+		render productService.productById(id) as JSON
 	}
 	
 	@Transactional
 	def buy() {
 		
 		TransactionRequest trans = new TransactionRequest(request.JSON)
+			
+		render productService.purchase(trans) as JSON 
 		
-		Product product = Product.where { sku == trans.sku }.find()
-		
-		if (product) {
-			render productService.purchase(product, bidRequest) as JSON 
-		} else {
-		    render status: 404
-		}
 	}		
 	
 	def history() {		
@@ -48,9 +41,7 @@ class InventoryController {
 	 * Catalog from API spec.
 	 */
 	def catalog() {				
-		render Product.list()?.collect { p ->  new Catalog(p) } as JSON			
+		render Product.list()?.collect { new Catalog(it) } as JSON			
 	}
-	
-		
 	
 }

@@ -12,17 +12,25 @@ class InventoryController {
 		render status: 404
 	}
 	
+	def handleProductMissing(ProductMissing pm) {
+		render pm, status: 500
+	}
+	
     def show(String sku) { 
 		
 		render productService.productBySku(sku) as JSON
 	}
 	
 	@Transactional
-	def buy() {
+	def buy(int account) {
 		
-		TransactionRequest trans = new TransactionRequest(request.JSON)
+		TransactionRequest order = new TransactionRequest(request.JSON)
+		
+		Transaction transaction = productService.purchase(account, order)
+		
+		response.status = 201
 			
-		render productService.purchase(trans) as JSON 
+		render transaction as JSON 
 		
 	}		
 	
@@ -42,6 +50,10 @@ class InventoryController {
 	 */
 	def catalog() {				
 		render Product.list()?.collect { new Catalog(product:it) } as JSON			
+	}
+	
+	def customers() {
+		render Account.list() as JSON
 	}
 	
 }

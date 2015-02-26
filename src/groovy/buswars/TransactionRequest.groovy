@@ -8,18 +8,16 @@ import grails.validation.Validateable
 @Validateable
 class TransactionRequest {
 	
-	TransactionRequest(def src) {
-		sku = src.sku
+	TransactionRequest(def src) {		
 		allOrNone = src.'all-or-none'
-		price = src.price
-		qty = src.qty
+		price = src.total
 		src.lineItems?.each { line ->
 			lines.add new TransactionLine(
 				sku: line.sku,
 	            qty: line.qty, 
 	            name: line.name,
 	            price: line.price,
-	            subtotal: subtotal)
+	            subtotal: line.subtotal)
 		}
 	}
 	
@@ -27,9 +25,7 @@ class TransactionRequest {
 	float price
 	def lines = []
 	
-	static constraints = {
-		sku blank: false
-		price nullable: false, min:0.01f
-		qty nullable: false, min:1
+	static constraints = {		
+	
 	}
 }

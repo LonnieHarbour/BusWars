@@ -10,6 +10,8 @@ class DatabaseInit {
 		[name:"Marginally Operational PS-1", price:14.0, sku:"SONY-1230-1", qtyOnHand:0]
 	]
 	
+	static accounts = ["CC & Company", "McPeek Inc.", "LH Heavy Industries"]
+	
 	def init() {
 		products.each { datum ->
 			def product = new Product(name:datum.name, price:datum.price, sku:datum.sku).save()
@@ -17,6 +19,10 @@ class DatabaseInit {
 				product.inventory = new Inventory(qtyOnHand: datum.qtyOnHand, product:product).save()
 				product.save()
 			}			
+		}
+		
+		accounts.each { co ->
+			new Account(name:co).save()			
 		}
 	}
 }

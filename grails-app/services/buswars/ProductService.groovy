@@ -9,29 +9,39 @@ class ProductService {
 	}
 	
 	
-    Transaction purchase(Account account, TransactionRequest order) {	
+    Transaction purchase(int accountId, TransactionRequest order) {
 		
-		Transaction transaction = new Transaction(account:account).save()	
+		Account account = account(accountId)	
 		
-		def products = Product.findBySkuInList(order?.lines.collect { sku } )		
+		Transaction transaction = new Transaction(account:account, complete:true).save()	
+		
+		def products = Product.findBySkuInList(order?.lines.collect { it.sku } )		
 				
 		order?.lines.each { line ->
 			
 			Product product = products.find { line.sku = sku }
 			
-			int qtyFullfilled = fullfill(product, line )
+			if (product) {
+				
+				int qtyFullfilled = fullfill(product, line )
+				
+				if (qty) {
+					product.qtyOnHand -= qtyFullfilled
+					product.save()
+				}
+				
+				transaction.lineItems.add(new LineItem(
+					accepted: qty>0,
+					product:product,
+					qtyFullfilled: qtyFullfilled,
+					qtyRequest: line.qtyRequested
+					))
+				
+			} else {
 			
-			if (qty) {
-				product.qtyOnHand -= qtyFullfilled
-				product.save()
+			   transaction.complete = false
 			}
 			
-			transaction.lineItems.add(new LineItem(
-				accepted: qty>0,
-				product:product,
-				qtyFullfilled: qtyFullfilled,
-				qtyRequest: line.qtyRequested
-				))
 		}
 		
 		transaction.save()

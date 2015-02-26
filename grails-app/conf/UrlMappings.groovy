@@ -21,11 +21,12 @@ class UrlMappings {
 		"/inventory/$sku"(controller:"inventory", action:"show", method:"GET")
 		
 		//buy
-		"/accounts/$accountNumber/transactions"(controller:"inventory", action:"buy", method:"POST")
+		"/accounts/$account/transactions"(controller:"inventory", action:"buy", method:"POST")
 		
 		"/purchases"(controller:"inventory", action:"history", method:"GET")
 		
-		
+		//misc
+		"/customers"(controller:"inventory", action:"customers", method:"GET")
 		
 		
 	}

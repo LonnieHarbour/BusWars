@@ -1,4 +1,5 @@
 import grails.converters.*
+import buswars.Account;
 import buswars.Catalog;
 import buswars.DatabaseInit;
 import buswars.LineItem;
@@ -15,9 +16,9 @@ class BootStrap {
 		JSON.registerObjectMarshaller(Transaction) { Transaction t ->
 			def output = [:]
             output['trans-id'] = t.id
-			output['account'] = t.id
+			output['account'] = t.account?.id
 			output['total'] = t.total			
-			output['lineItems'] = t.lineItems
+			output['lineItems'] = [t.lineItems.collect({ it })]
 			output
 		}
 		
@@ -31,7 +32,6 @@ class BootStrap {
 			output['accepted'] = i.accepted
 			output
 		}
-
 		
 		JSON.registerObjectMarshaller(Product) { Product p ->
 			def output = [:]
@@ -47,6 +47,13 @@ class BootStrap {
 			output['sku'] = c.product?.sku
 			output['name'] = c.product.name
 			output['price'] = c.product.price
+			output
+		}
+		
+		JSON.registerObjectMarshaller(Account) { Account a ->
+			def output = [:]
+			output['id'] = a.id
+			output['name'] = a.name
 			output
 		}
 		

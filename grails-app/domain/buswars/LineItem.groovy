@@ -6,7 +6,7 @@ class LineItem {
 	int qtyFullfilled	
 	float total
 	boolean accepted
-	//Transaction transaction
+	Transaction transaction
 	Product product
 	
     static constraints = {

@@ -29,6 +29,7 @@ class ProductService {
 			transaction.lineItems.add(new LineItem(
 				accepted: qty>0,
 				product:product,
+				transaction:transaction,
 				qtyFullfilled: qtyFullfilled,
 				qtyRequest: line.qtyRequested
 				))

@@ -6,7 +6,7 @@ class ProductService {
 		
 		Account account = account(accountId)	
 		
-		Transaction transaction = new Transaction(account:account, complete:true).save()	
+		Transaction transaction = new Transaction(account:account, complete:true, lineItems:[]).save()	
 		
 		def products = Product.where { sku in order?.lines.collect { it.sku } }.list()
 				
@@ -27,8 +27,8 @@ class ProductService {
 				
 				LineItem item = new LineItem(
 					accepted: qtyFullfilled>0,
-					product:product,
-					transaction:transaction,
+					product:product,	
+					transaction:transaction,				
 					qtyFullfilled: qtyFullfilled,
 					qtyRequested: line.qty,
 					total: total

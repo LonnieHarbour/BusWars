@@ -18,7 +18,7 @@ class BootStrap {
             output['trans-id'] = t.id
 			output['account'] = t.account?.id
 			output['total'] = t.total			
-			output['lineItems'] = [t.lineItems.collect({ it })]
+			output['lineItems'] = t.lineItems
 			output
 		}
 		

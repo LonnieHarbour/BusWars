@@ -18,7 +18,7 @@ class BootStrap {
             output['trans-id'] = t.id
 			output['account'] = t.account?.id
 			output['total'] = t.total			
-			output['lineItems'] = t.lineItems
+			output['lineItems'] = [t.lineItems.collect({ it })]
 			output
 		}
 		
@@ -32,7 +32,6 @@ class BootStrap {
 			output['accepted'] = i.accepted
 			output
 		}
-
 		
 		JSON.registerObjectMarshaller(Product) { Product p ->
 			def output = [:]

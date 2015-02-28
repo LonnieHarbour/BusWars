@@ -6,6 +6,8 @@ class Transaction {
 	Account account
 	boolean complete
 	
+	def lineItems = []
+	
 	static hasMany = [lineItems:LineItem]
 	
     static constraints = {

@@ -12,7 +12,7 @@ class DatabaseInit {
 	
 	static accounts = ["CC & Company", "McPeek Inc.", "LH Heavy Industries"]
 	
-	def init() {
+	def static init() {
 		products.each { datum ->
 			def product = new Product(name:datum.name, price:datum.price, sku:datum.sku).save()
 			if (datum.qtyOnHand) {

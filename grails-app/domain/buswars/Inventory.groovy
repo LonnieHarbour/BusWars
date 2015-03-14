@@ -4,7 +4,4 @@ class Inventory {
 
 	long qtyOnHand
 	Product product
-	
-    static constraints = {
-    }
 }

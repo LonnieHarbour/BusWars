@@ -9,42 +9,42 @@ class InventoryController {
 	ProductService productService
 
 	def show(String sku) {
-		render got(productService.productBySku(sku)) as JSON
+		got productService.productBySku(sku)
 	}
 
 	@Transactional
 	def buy(int accountid) {
-		Transaction transaction = productService.purchase(accountid, new TransactionRequest(request.JSON))		
+		Transaction transaction = productService.purchase(accountid, new TransactionRequest(request.JSON))
 		response.status = 201
 		//set location of created resource as per http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.30
 		response.setHeader 'Location', "/accounts/$accountid/transactions/${transaction.id}"
-		render transaction as JSON
+		got transaction
 	}
 
 	def history() {
-		render got(productService.history) as JSON
+		got productService.history
 	}
-	
+
 	def accountTranHistory(int accountid, int tranid) {
-		render got(productService.historyByAccountTranid(accountid, tranid)) as JSON
+		got productService.historyByAccountTranid(accountid, tranid)
 	}
-	
+
 	def tranHistory(int tranid) {
-	    render got(productService.historyByTranid(tranid)) as JSON
-    }
+		got productService.historyByTranid(tranid)
+	}
 
 	def products() {
-		render got(productService.products) as JSON
+		got productService.products
 	}
 
 	def catalog() {
-		render got(productService.catalog) as JSON
+		got productService.catalog
 	}
 
 	def customers() {
-		render got(productService.customers) as JSON
+		got productService.customers 
 	}
-	
+
 	def handleNotFound(NotFound nf) {
 		render status: 404
 	}
@@ -52,9 +52,10 @@ class InventoryController {
 	def handleProductMissing(ProductMissing pm) {
 		render pm, status: 500
 	}
-	
+
 	private def got(def object) {
-		if (object) { object } else throw new NotFound()
+		if (object) {
+			render object as JSON
+		} else throw new NotFound()
 	}
-	
 }

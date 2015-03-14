@@ -1,3 +1,5 @@
 package buswars
 
-class NotFound extends Exception {}
+class NotFound extends Exception {
+
+}

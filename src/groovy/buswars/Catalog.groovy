@@ -3,6 +3,6 @@ package buswars
 /*
  * To render the catalog view of product
  */
-class Catalog {	
+class Catalog {
 	Product product
 }

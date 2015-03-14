@@ -3,17 +3,17 @@ package buswars
 import grails.converters.*
 
 class JSONMarshallerInit {
-	
+
 	def static init() {
 		JSON.registerObjectMarshaller(Transaction) { Transaction t ->
 			def output = [:]
-            output['trans-id'] = t.id
+			output['trans-id'] = t.id
 			output['account'] = t.account?.id
-			output['total'] = t.total			
+			output['total'] = t.total
 			output['lineItems'] = t.lineItems
 			output
 		}
-		
+
 		JSON.registerObjectMarshaller(LineItem) { LineItem i ->
 			def output = [:]
 			output['sku'] = i.product?.sku
@@ -24,7 +24,7 @@ class JSONMarshallerInit {
 			output['accepted'] = i.accepted
 			output
 		}
-		
+
 		JSON.registerObjectMarshaller(Product) { Product p ->
 			def output = [:]
 			output['sku'] = p.sku
@@ -33,7 +33,7 @@ class JSONMarshallerInit {
 			output['qty'] = p.inventory ? p.inventory.qtyOnHand : 0
 			output
 		}
-		
+
 		JSON.registerObjectMarshaller(Catalog) { Catalog c ->
 			def output = [:]
 			output['sku'] = c.product?.sku
@@ -41,7 +41,7 @@ class JSONMarshallerInit {
 			output['price'] = c.product.price
 			output
 		}
-		
+
 		JSON.registerObjectMarshaller(Account) { Account a ->
 			def output = [:]
 			output['id'] = a.id

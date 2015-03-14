@@ -3,14 +3,9 @@ package buswars
 class LineItem {
 
 	int qtyRequested
-	int qtyFullfilled	
+	int qtyFullfilled
 	float total
-	boolean accepted	
+	boolean accepted
 	Product product
 	Transaction transaction
-	
-	//static hasOne = [transaction:Transaction]
-	
-    static constraints = {
-    }
 }
